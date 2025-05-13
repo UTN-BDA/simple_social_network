@@ -1,5 +1,5 @@
 from flask import Flask
-from app.resources import inicio
+
 from app.config import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -20,9 +20,12 @@ def create_app():
     migrate.init_app(app, db)
 
     # Registro de Blueprints
+    from app.resources import inicio
+    
     app.register_blueprint(inicio, url_prefix='/inicio')
 
-    from app.models import usuario
+    # Modelos
+    from app.models import Usuario, Publicacion, Amistad
 
     return app
 
