@@ -10,7 +10,7 @@ class PublicacionRepository:
 
 
     @staticmethod
-    def buscar(self):
+    def buscar():
         publicaciones = db.session.query(Amistad).all()
         return publicaciones
     

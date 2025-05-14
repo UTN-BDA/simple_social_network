@@ -1,6 +1,6 @@
 from app import db
 
-class Usuario(db.Model):
+class Publicacion(db.Model):
     __tablename__ = 'usuarios'
 
     # Atributos 

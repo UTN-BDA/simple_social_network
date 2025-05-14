@@ -11,7 +11,7 @@ class AmistadRepository:
 
 
     @staticmethod
-    def buscar(self):
+    def buscar():
         amistades = db.session.query(Amistad).all()
         return amistades
     

@@ -10,7 +10,7 @@ class UsuarioRepository:
 
 
     @staticmethod
-    def buscar(self):
+    def buscar():
         usuarios = db.session.query(Usuario).all()
         return usuarios
     
