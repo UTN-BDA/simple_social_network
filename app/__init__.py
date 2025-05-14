@@ -20,9 +20,10 @@ def create_app():
     migrate.init_app(app, db)
 
     # Registro de Blueprints
-    from app.resources import inicio
+    from app.resources import inicio, usuario
     
     app.register_blueprint(inicio, url_prefix='/inicio')
+    app.register_blueprint(usuario, url_prefix='/usuario')
 
     # Modelos
     from app.models import Usuario, Publicacion, Amistad
