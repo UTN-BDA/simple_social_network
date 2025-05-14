@@ -1,1 +1,3 @@
 from .usuario_repository import UsuarioRepository
+from .amistad_respository import AmistadRepository
+from .publicacion_repository import PublicacionRepository

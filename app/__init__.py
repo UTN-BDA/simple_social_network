@@ -26,7 +26,7 @@ def create_app():
     app.register_blueprint(usuario, url_prefix='/usuario')
 
     # Modelos
-    from app.models import Usuario, Publicacion, Amistad
+    from app.models import Usuario, Amistad, Amistad
 
     return app
 
