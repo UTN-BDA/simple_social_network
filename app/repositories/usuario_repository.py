@@ -4,9 +4,10 @@ from app.models import Usuario
 class UsuarioRepository:
 
     @staticmethod
-    def crear(usuario):
+    def crear(usuario) -> Usuario:
         db.session.add(usuario)
         db.session.commit()
+        return usuario
 
 
     @staticmethod

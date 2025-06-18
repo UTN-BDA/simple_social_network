@@ -1,6 +1,6 @@
 from app import db
 
-class Publicacion(db.Model):
+class Usuario(db.Model):
     __tablename__ = 'usuarios'
 
     # Atributos 
@@ -9,7 +9,7 @@ class Publicacion(db.Model):
     apellido: str = db.Column(db.String(80), nullable = False)
     edad: int = db.Column(db.Integer, nullable = False)
     correo: str = db.Column(db.String(80), nullable = False, unique = True)
-    contraseña: str = db.Column(db.String(100), nullable = False, unique = True)
+    contraseña: str = db.Column(db.String(100), nullable = False)
 
     # Relación N:1 con publicaciones
     publicaciones = db.relationship('Publicacion', uselist=True, back_populates='usuario')

@@ -7,8 +7,9 @@ usuario_repository = UsuarioRepository()
 
 class UsuarioService:
     @staticmethod
-    def crear(usuario: Usuario):
-        UsuarioRepository.crear(usuario)
+    def crear(usuario: Usuario) -> Usuario:
+        usuario = UsuarioRepository.crear(usuario)
+        return usuario
 
     
     @staticmethod
@@ -17,7 +18,7 @@ class UsuarioService:
     
     @staticmethod
     def buscar() -> list[Usuario]:
-        return UsuarioRepository.buscar_todos()
+        return UsuarioRepository.buscar()
     
     @staticmethod
     def actualizar(id: int, usuario: Usuario) -> Usuario:
