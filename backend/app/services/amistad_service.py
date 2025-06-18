@@ -18,7 +18,7 @@ class AmistadService:
     
     @staticmethod
     def buscar() -> list[Amistad]:
-        return AmistadRepository.buscar_todos()
+        return AmistadRepository.buscar()
     
     @staticmethod
     def actualizar(id: int, amistad: Amistad) -> Amistad:

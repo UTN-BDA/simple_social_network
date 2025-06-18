@@ -18,7 +18,7 @@ class PublicacionService:
     
     @staticmethod
     def buscar() -> list[Publicacion]:
-        return PublicacionRepository.buscar_todos()
+        return PublicacionRepository.buscar()
     
     @staticmethod
     def actualizar(id: int, publicacion: Publicacion) -> Publicacion:
