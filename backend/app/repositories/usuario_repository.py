@@ -18,6 +18,10 @@ class UsuarioRepository:
     @staticmethod
     def buscar_por_id(id: int):
         return db.session.query(Usuario).filter_by(id=id).first()
+    
+    @staticmethod
+    def buscar_por_correo(correo: str):
+        return db.session.query(Usuario).filter_by(correo = correo).first()
 
 
     @staticmethod

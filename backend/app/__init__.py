@@ -2,7 +2,7 @@ from flask import Flask
 from app.config import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-# from flask_cors import CORS
+from flask_cors import CORS
 
 
 db = SQLAlchemy()
@@ -22,13 +22,14 @@ def create_app():
     migrate.init_app(app, db)
 
     #Conexión con React
-    # CORS(app)
+    CORS(app)
 
     # Registro de Blueprints
-    from app.resources import inicio, usuario
+    from app.resources import inicio, usuario, login
     
     app.register_blueprint(inicio, url_prefix='/inicio')
     app.register_blueprint(usuario, url_prefix='/usuario')
+    app.register_blueprint(login, url_prefix='/login')
 
     from app.services import register_error_handlers
     register_error_handlers(app)

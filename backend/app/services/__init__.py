@@ -1,3 +1,4 @@
+from .hash_service import Hash
 from .response_message import ResponseBuilder
 from .usuario_service import UsuarioService
 from .amistad_service import AmistadService
