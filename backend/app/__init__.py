@@ -25,11 +25,12 @@ def create_app():
     CORS(app)
 
     # Registro de Blueprints
-    from app.resources import inicio, usuario, login
+    from app.resources import inicio, usuario, login, register
     
     app.register_blueprint(inicio, url_prefix='/inicio')
     app.register_blueprint(usuario, url_prefix='/usuario')
     app.register_blueprint(login, url_prefix='/login')
+    app.register_blueprint(register, url_prefix='/register')
 
     from app.services import register_error_handlers
     register_error_handlers(app)

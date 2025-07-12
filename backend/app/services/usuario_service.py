@@ -1,6 +1,7 @@
 from app.models import Usuario
 from app.repositories import UsuarioRepository
 from app.services import Hash
+from datetime import date
 
 usuario_repository = UsuarioRepository()
 hash_service = Hash()
@@ -8,12 +9,19 @@ hash_service = Hash()
 class UsuarioService:
     @staticmethod
     def crear(usuario: Usuario) -> Usuario:
+        # Hashear contraseña
         hash_contraseña = hash_service.generar_contraseña(usuario.contraseña)
         usuario.contraseña = hash_contraseña
+
+        # Transformar fecha de nacimiento en edad
+        hoy = date.today()
+        nacimiento = usuario.nacimiento
+        edad = hoy.year - nacimiento.year - ((hoy.month, hoy.day) < (nacimiento.month, nacimiento.day))
+        
+        usuario.edad = edad
         usuario = UsuarioRepository.crear(usuario)
         return usuario
 
-    
     @staticmethod
     def buscar_por_id(id: int) -> Usuario:
         return UsuarioRepository.buscar_por_id(id)
@@ -41,9 +49,8 @@ class UsuarioService:
     def buscar_por_correo(correo: str) -> Usuario:
         return UsuarioRepository.buscar_por_correo(correo)
 
-
     @staticmethod
-    def verificar_usuario(correo: str, contraseña: str):
+    def verificar_usuario(correo: str, contraseña: str) -> dict:
         usuario = UsuarioRepository.buscar_por_correo(correo)
         if usuario:
             if hash_service.verificar_contraseña(hash=usuario.contraseña, contraseña=contraseña):
