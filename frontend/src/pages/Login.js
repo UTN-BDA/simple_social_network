@@ -1,9 +1,14 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
   var [contraseña, setContraseña] = useState("");
   var [correo, setCorreo] = useState("");
+  const [error, setError] = useState(null);
+  const [mostrar, setMostrar] = useState(false);
+
+  const navigate = useNavigate();
 
   // const handleLogin = () => {
   //   fetch('http://localhost:5000/inicio')
@@ -12,7 +17,7 @@ function Login() {
   // };
 
   const enviarDatos = () => {
-    fetch('http://localhost:5000/inicio',{
+    fetch('http://127.0.0.1:5000/login/',{
       method: 'POST',
       headers: {
       'Content-Type': 'application/json' 
@@ -23,12 +28,31 @@ function Login() {
     ) 
     })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+        if (data.data) {
+          navigate('/home');
+        } else {
+          // Muestra el error recibido del backend
+          setError(data.message || "Error desconocido")
+        }
+      })
   }
+
+  const toggleMostrarContraseña = () => {
+    setMostrar(prev => !prev);
+  };
 
   return (
     <>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+
       <h1>Inicio de sesión</h1>
+
+      <label>¿No tienes cuenta? </label>
+      <button onClick={()=>navigate("/register")}>Registrate</button>
+
+      <br />
 
       <label>Correo electrónico: </label>
       <input
@@ -38,15 +62,24 @@ function Login() {
         onChange={(e) => setCorreo(e.target.value)}
         value={correo}
       />
+
       <br />
 
       <label>Contraseña: </label>
       <input
         required={true}
-        type="password"
+        type={mostrar ? 'text' : 'password'}
         onChange={(e) => setContraseña(e.target.value)}
         value={contraseña}
-      />
+        id='miContraseña'
+      /> 
+      <label> Mostrar contraseña </label>
+      <input
+        type='checkbox'
+        checked={mostrar}
+        onChange={toggleMostrarContraseña}
+      /> 
+
       <br />
 
       <button onClick={enviarDatos}>Ingresar</button>
