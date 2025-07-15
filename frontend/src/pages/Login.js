@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "../context/UserContext"; 
+import axios from 'axios';
 
 function Login() {
 
@@ -10,33 +12,29 @@ function Login() {
 
   const navigate = useNavigate();
 
-  // const handleLogin = () => {
-  //   fetch('http://localhost:5000/inicio')
-  //   .then(respuesta => respuesta.json())
-  //   .then(data => console.log(data.message))
-  // };
+  const { setUsuario } = useUser(); 
 
-  const enviarDatos = () => {
-    fetch('http://127.0.0.1:5000/login/',{
-      method: 'POST',
-      headers: {
-      'Content-Type': 'application/json' 
-      },
-      body: JSON.stringify(
-        { correo: correo,
-          contraseña: contraseña}
-    ) 
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.data) {
-          navigate('/home');
-        } else {
-          // Muestra el error recibido del backend
-          setError(data.message || "Error desconocido")
-        }
-      })
-  }
+/* ----------  ENVÍO AL BACKEND  ---------- */
+  const enviarDatos = async () => {
+     
+    const formData = new FormData();
+
+    formData.append("correo", correo); 
+    formData.append("contraseña", contraseña); 
+
+    try {
+      const res = await axios.post("http://127.0.0.1:5000/login/", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      if (res.status === 200 || res.data.message) {
+        setUsuario(res.data.data);
+        navigate("/home");   
+    } 
+    } catch (err) {
+      console.error("Error al subir información:", err);
+    }
+  };
+
 
   const toggleMostrarContraseña = () => {
     setMostrar(prev => !prev);

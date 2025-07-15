@@ -1,14 +1,15 @@
 from app.models import Usuario
 from app.repositories import UsuarioRepository
-from app.services import Hash
+from app.services import Hash, ImageHandler
 from datetime import date
 
 usuario_repository = UsuarioRepository()
 hash_service = Hash()
+image_handler = ImageHandler()
 
 class UsuarioService:
     @staticmethod
-    def crear(usuario: Usuario) -> Usuario:
+    def crear(usuario: Usuario, imagen) -> Usuario:
         # Hashear contraseña
         hash_contraseña = hash_service.generar_contraseña(usuario.contraseña)
         usuario.contraseña = hash_contraseña
@@ -19,6 +20,8 @@ class UsuarioService:
         edad = hoy.year - nacimiento.year - ((hoy.month, hoy.day) < (nacimiento.month, nacimiento.day))
         
         usuario.edad = edad
+        usuario.imagen = image_handler.save(imagen)
+
         usuario = UsuarioRepository.crear(usuario)
         return usuario
 
@@ -50,25 +53,13 @@ class UsuarioService:
         return UsuarioRepository.buscar_por_correo(correo)
 
     @staticmethod
-    def verificar_usuario(correo: str, contraseña: str) -> dict:
+    def verificar_usuario(correo: str, contraseña: str) -> Usuario:
         usuario = UsuarioRepository.buscar_por_correo(correo)
         if usuario:
             if hash_service.verificar_contraseña(hash=usuario.contraseña, contraseña=contraseña):
-                return {
-                    "success": True,
-                    "data": usuario,
-                    "message": "Inicio de sesión exitoso"
-                }
+                return usuario
             else:
-                return {
-                    "success": False,
-                    "data": None,
-                    "message": "La contraseña es inválida"
-                }
+                return None
         else:
-            return {
-                "success": False,
-                "data": None,
-                "message": "No se encontró un usuario asociado al correo"
-            }
+            return None
         

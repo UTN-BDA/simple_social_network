@@ -11,6 +11,7 @@ class Usuario(db.Model):
     nacimiento: str = db.Column(db.Date, nullable = False)
     correo: str = db.Column(db.String(80), nullable = False, unique = True)
     contraseña: str = db.Column(db.String(200), nullable = False)
+    imagen: str = db.Column(db.String(200), nullable = False)
 
     # Relación N:1 con publicaciones
     publicaciones = db.relationship('Publicacion', uselist=True, back_populates='usuario')

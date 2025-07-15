@@ -34,6 +34,8 @@ class UsuarioSchema(Schema):
         error_messages={"required": "La contraseña es obligatoria."}
     )
 
+    imagen = fields.String()
+
     @validates("nacimiento")
     def validar_fecha_nacimiento(self, data, **kwargs):
         hoy = date.today()

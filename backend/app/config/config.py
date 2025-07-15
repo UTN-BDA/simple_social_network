@@ -17,7 +17,7 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DB_URI')
-
+    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
 
 
 config = {

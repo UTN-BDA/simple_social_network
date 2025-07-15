@@ -1,5 +1,4 @@
-from flask import jsonify
-# from werkzeug.exceptions import HTTPException
+from werkzeug.exceptions import HTTPException
 from sqlalchemy.exc import IntegrityError
 from marshmallow import ValidationError
 from . import ResponseBuilder
@@ -17,18 +16,11 @@ def register_error_handlers(app):
         return response_schema.dump(response_builder.build()), 409
 
     # Errores HTTP (400, 404, 405, 500…)
-    # @app.errorhandler(HTTPException)
-    # def handle_http_exception(e):
-    #     response = e.get_response()
-    #     response.data = jsonify({
-    #         "error": {
-    #             "code": e.code,
-    #             "name": e.name,
-    #             "description": e.description,
-    #         }
-    #     }).data
-    #     response.content_type = "application/json"
-    #     return response
+    @app.errorhandler(HTTPException)
+    def handle_http_exception(e):
+        response_builder = ResponseBuilder()
+        response_builder.add_message(e.name).add_data(e.description).add_status_code(e.code)
+        return response_schema.dump(response_builder.build()), e.code
 
     # Errores de validación de esquemas 
     @app.errorhandler(ValidationError)

@@ -1,127 +1,21 @@
-// import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-
-// function Register() {
-
-//   const [nombre, setNombre] = useState("");
-//   const [apellido, setApellido] = useState("");
-//   const [nacimiento, setNacimiento] = useState("");
-//   const [correo, setCorreo] = useState("");
-//   const [contraseña, setContraseña] = useState("");
-
-//   const [mostrar, setMostrar] = useState(false);
-//   const [error, setError] = useState(null);
-
-//   const navigate = useNavigate()
-
-//   const toggleMostrarContraseña = () => {
-//     setMostrar(prev => !prev);
-//   };
-
-//   const enviarDatos = () => {
-//     fetch('http://127.0.0.1:5000/login/',{
-//       method: 'POST',
-//       headers: {
-//       'Content-Type': 'application/json' 
-//       },
-//       body: JSON.stringify(
-//         { correo: correo,
-//           contraseña: contraseña}
-//     ) 
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.data) {
-//           navigate('/home');
-//         } else {
-//           // Muestra el error recibido del backend
-//           setError(data.message || "Error desconocido")
-//         }
-//       })
-//   }
-
-//   return (
-//     <div>
-//       {error && <p style={{ color: 'red' }}>{error}</p>}
-//       <h1>Estas en el register</h1>
-
-//       <label>Nombre</label>
-//       <input 
-//         type="text" 
-//         required="true" 
-//         onChange={(e) => setNombre(e.target.value)}
-//         value={nombre}>
-//       </input>
-
-//       <br />
-
-//       <label>Apellido</label>
-//       <input 
-//         type="text" 
-//         required="true"
-//         onChange={(e) => setApellido(e.target.value)}
-//         value={apellido}
-//         ></input>
-
-//       <br />
-
-//       <label>Fecha de nacimiento</label>
-//       <input 
-//         type="date" 
-//         required="true"
-//         onChange={(e) => setNacimiento(e.target.value)}
-//         value={nacimiento}
-//       ></input>
-
-//       <br />
-
-//       <label>Correo</label>
-//       <input 
-//       type="email" 
-//       required="true"
-//       onChange={(e) => setCorreo(e.target.value)}
-//       value={correo}
-//       ></input>
-
-//       <br />
-
-//       <label>contraseña</label>
-//       <input 
-//       type={mostrar ? 'text' : 'password'}
-//       required="true"
-//       onChange={(e) => setContraseña(e.target.value)}
-//       value={contraseña}
-//       ></input>
-//       <label> Mostrar contraseña </label>
-//       <input
-//         type='checkbox'
-//         checked={mostrar}
-//         onChange={toggleMostrarContraseña}
-//       /> 
-
-//       <br />
-
-//       <button onClick={enviarDatos}>Crear Usuario</button>
-
-//     </div>
-//   );
-// }
-
-// export default Register;
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext"; 
+import axios from 'axios';
 
 function Register() {
+
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [nacimiento, setNacimiento] = useState("");
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");
-
+  const [imagen, setImagen] = useState(null)
   const [mostrar, setMostrar] = useState(false);
   const [serverError, setServerError] = useState(null);
-  const [errors, setErrors] = useState({});     // <-- errores de validación
+  const [errors, setErrors] = useState({}); 
+
+  const { setUsuario } = useUser(); 
 
   const navigate = useNavigate();
 
@@ -162,27 +56,28 @@ function Register() {
   };
 
   /* ----------  ENVÍO AL BACKEND  ---------- */
-  const enviarDatos = () => {
-    fetch("http://127.0.0.1:5000/register/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nombre,
-        apellido,
-        nacimiento,
-        correo,
-        contraseña,
-      }),
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.message) {
-          navigate("/home");
-        } else {
-          setServerError(data.message || "Error desconocido");
-        }
-      })
-      .catch(() => setServerError("No se pudo conectar con el servidor"));
+  const enviarDatos = async () => {
+     
+    const formData = new FormData();
+
+    formData.append("nombre", nombre); 
+    formData.append("apellido", apellido); 
+    formData.append("nacimiento", nacimiento);
+    formData.append("correo", correo); 
+    formData.append("contraseña", contraseña);  
+    formData.append("imagen", imagen); 
+
+    try {
+      const res = await axios.post("http://127.0.0.1:5000/register/", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      if (res.status === 201 || res.data.message) {
+        setUsuario(res.data.data);
+        navigate("/profile");   
+    } 
+    } catch (err) {
+      console.error("Error al subir información:", err);
+    }
   };
 
   /* ----------  SUBMIT  ---------- */
@@ -191,7 +86,7 @@ function Register() {
     const err = validate();
     setErrors(err);
     if (Object.keys(err).length === 0) {
-      enviarDatos(); // solo si todo está OK
+      enviarDatos(); 
     }
   };
 
@@ -295,6 +190,10 @@ function Register() {
         </label>
         
         <br />
+
+         <label>Foto de perfil <input type="file" accept="image/*" onChange={(e)=>setImagen(e.target.files[0])}/></label>
+
+         <br />
 
         <button type="submit">Crear usuario</button>
       </form>

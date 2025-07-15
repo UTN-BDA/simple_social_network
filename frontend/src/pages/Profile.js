@@ -1,16 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 function Profile() {
-
-  const navigate = useNavigate()
-
-  
+  const { usuario } = useUser();
 
   return (
     <div>
-      <h1>Perfil del Usuario</h1>
-      <button onClick={() => navigate('/')}>Inicio de sesion</button>
-      <button onClick={() => navigate('/home')}>Menu principal</button>
+      <h1>Perfil de {usuario.nombre}</h1>
+      <img src={usuario.imagen} alt="Foto de perfil" style={{ width: 200 }} />
+      <p>Correo: {usuario.correo}</p>
     </div>
   );
 }
