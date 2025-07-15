@@ -1,0 +1,43 @@
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 200px;
+  background: #1e293b;      /* slate-800 */
+  color: #ffffff;
+  padding: 1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar a {
+  display: block;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+}
+
+.sidebar a:hover {
+  background: #334155;      /* slate-700 */
+}
+
+/* NavLink agrega automáticamente la clase "active" */
+.sidebar a.active {
+  background: #0ea5e9;      /* sky-500 */
+}
+
+/* Área de contenido */
+.content {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
