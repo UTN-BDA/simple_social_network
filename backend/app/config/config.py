@@ -18,7 +18,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DB_URI')
     UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
-
+    MONGO_URI = os.environ.get('MONGO_URI')
 
 config = {
     'development': DevelopmentConfig,

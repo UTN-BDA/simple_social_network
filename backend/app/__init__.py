@@ -3,11 +3,13 @@ from app.config import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
+from flask_pymongo import PyMongo
 
 
 db = SQLAlchemy()
 migrate = Migrate()
-
+mongo = PyMongo()
+print(mongo)
 
 def create_app():
     # Creación de app
@@ -20,6 +22,9 @@ def create_app():
     # Iniciamos la base de datos y las migraciones
     db.init_app(app)
     migrate.init_app(app, db)
+
+    # Iniciamos MongoDB
+    mongo.init_app(app)
 
     #Conexión con React
     CORS(app)

@@ -1,2 +1,3 @@
-DEV_DB_URI = 'postgresql://usuario:contraseña@host:port/nombre_DB'
+DEV_DB_URI = 'postgresql://usuario:contraseña@host:port/database'
 UPLOAD_FOLDER = 'app/static/uploads'
+MONGO_URI = 'mongodb://usuario:contraseña@host:port/database?authSource=admin'
