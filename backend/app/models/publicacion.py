@@ -1,16 +1,12 @@
-from app import db
+from dataclasses import dataclass, field
+from typing import List
 
-class Publicacion(db.Model):
-    __tablename__ = 'publicaciones'
+@dataclass
+class Publicacion:
 
-    # Atributos 
-    id: int = db.Column(db.Integer, primary_key = True, autoincrement = True)
-    fecha: str = db.Column(db.DateTime, nullable = False)
-    contenido: str = db.Column(db.String(100), nullable = False) # ID nosql
-
-    # LLave foránea a usuario
-    id_usuario: int = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
-
-    # Relación 1:N con usuario
-    usuario = db.relationship('Usuario', uselist=False, back_populates='publicaciones')
+    _id: str = None
+    id_usuario: str = None
+    fecha: str = None
+    imagen: List = field(default_factory=list)
+    texto: str = None
     

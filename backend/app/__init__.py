@@ -9,7 +9,6 @@ from flask_pymongo import PyMongo
 db = SQLAlchemy()
 migrate = Migrate()
 mongo = PyMongo()
-print(mongo)
 
 def create_app():
     # Creación de app
@@ -30,18 +29,19 @@ def create_app():
     CORS(app)
 
     # Registro de Blueprints
-    from app.resources import inicio, usuario, login, register
+    from app.resources import inicio, usuario, login, register, publicaciones
     
     app.register_blueprint(inicio, url_prefix='/inicio')
     app.register_blueprint(usuario, url_prefix='/usuario')
     app.register_blueprint(login, url_prefix='/login')
     app.register_blueprint(register, url_prefix='/register')
+    app.register_blueprint(publicaciones, url_prefix='/publicaciones')
 
     from app.services import register_error_handlers
     register_error_handlers(app)
 
     # Modelos
-    from app.models import Publicacion, Amistad, Amistad
+    from app.models import Usuario, Amistad
 
     return app
 
