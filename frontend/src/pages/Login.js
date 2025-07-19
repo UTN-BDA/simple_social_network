@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from "../context/UserContext"; 
 import axios from 'axios';
 
 function Login() {
@@ -12,13 +11,12 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const { setUsuario } = useUser(); 
-
 /* ----------  ENVÍO AL BACKEND  ---------- */
   const enviarDatos = async () => {
      
     const formData = new FormData();
 
+    // Contenido que se enviará
     formData.append("correo", correo); 
     formData.append("contraseña", contraseña); 
 
@@ -26,15 +24,35 @@ function Login() {
       const res = await axios.post("http://127.0.0.1:5000/login/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
       if (res.status === 200 || res.data.message) {
-        setUsuario(res.data.data);
-        navigate("/home");   
-    } 
+        const userData = res.data.data;
+
+        // Convertir la imagen de URL a base64
+        const imageUrl = userData.imagen;
+        const imageResponse = await fetch(imageUrl);
+        const blob = await imageResponse.blob();
+
+        const base64Image = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result); // base64 result
+          reader.onerror = reject;
+          reader.readAsDataURL(blob); // convierte a base64
+        });
+
+        // Reemplazar la URL con la imagen en base64
+        userData.imagen = base64Image;
+
+        // Guardar en localstorage
+        localStorage.setItem("usuario", JSON.stringify(userData));
+
+        // Redirigir
+        navigate("/home");
+      }
     } catch (err) {
       console.error("Error al subir información:", err);
     }
   };
-
 
   const toggleMostrarContraseña = () => {
     setMostrar(prev => !prev);

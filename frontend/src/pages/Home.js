@@ -1,12 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import Publicar from "../components/Publicar"
+import Sidebar from "../components/Sidebar";
 
 function Home() {
-  const navigate = useNavigate();
 
   return (
     <div>
+      <Sidebar />
       <h1>Pantalla Principal</h1>
-      <button onClick={() => navigate('/profile')}>Ir al perfil</button>
+      <Publicar />
     </div>
   );
 }
