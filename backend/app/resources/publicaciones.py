@@ -16,7 +16,8 @@ publicacion_schema = PublicacionSchema()
 def crear_publicacion():
     try:
         data = publicacion_schema.load(request.form)
-        publicacion = publicacion_schema.dump(publicacion_service.crear(data))
+        imagenes = request.files.getlist("imagenes")  
+        publicacion = publicacion_schema.dump(publicacion_service.crear(data, imagenes))
         if publicacion:
             response_builder = ResponseBuilder()
             response_builder.add_data(publicacion).add_message("Ok").add_status_code(201)

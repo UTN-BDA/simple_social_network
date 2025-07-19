@@ -1,16 +1,18 @@
-from flask import Blueprint, request
-from app.services import UsuarioService, ResponseBuilder
-from app.mapping import UsuarioSchema, ResponseSchema
+from flask import Blueprint, request, url_for
+from app.services import UsuarioService, ResponseBuilder, PublicacionService
+from app.mapping import UsuarioSchema, ResponseSchema, PublicacionSchema
 
 
 usuario = Blueprint('usuario', __name__)
 
 # Service
 usuario_service = UsuarioService()
+publicacion_service = PublicacionService()
 
 # Schemas
 usuario_schema = UsuarioSchema()
 response_schema = ResponseSchema()
+publicacion_schema = PublicacionSchema()
 
 # Obtener lista de usuarios
 @usuario.route('/', methods =['GET'])
@@ -40,4 +42,31 @@ def delete(id):
         response_builder.add_message("Usuario no encontrado").add_status_code(400)
         return response_schema.dump(response_builder.build())
 
+@usuario.route("/publicaciones/<int:id_usuario>", methods=["GET"])
+def publicaciones(id_usuario):
+    try:
+        resultado = publicacion_service.buscar_por_usuario(id_usuario)
 
+        for publicacion in resultado:
+            # Asegurarse de que 'imagenes' existe y es una lista
+            if "imagenes" in publicacion and isinstance(publicacion["imagenes"], list):
+                nuevas_rutas = []
+                for imagen in publicacion["imagenes"]:
+                    ruta = url_for('static', filename="/posts/"+ imagen, _external=True)
+                    nuevas_rutas.append(ruta)
+                publicacion["imagenes"] = nuevas_rutas
+            else:
+                publicacion["imagenes"] = []  # Garantiza que siempre exista la clave
+
+        publicaciones = publicacion_schema.dump(resultado, many=True)
+
+        if publicaciones:
+            response_builder = ResponseBuilder()
+            response_builder.add_data(publicaciones).add_message("Ok").add_status_code(200)
+            return response_schema.dump(response_builder.build())
+        else:
+            response_builder = ResponseBuilder()
+            response_builder.add_message("No hay publicaciones").add_status_code(200)
+            return response_schema.dump(response_builder.build())
+    except Exception as e:
+        raise

@@ -1,19 +1,28 @@
 from app.repositories import PublicacionRepository
 from app.models import Publicacion
+from app.services import ImageHandler
 from datetime import datetime
+from typing import List
 
 
 publicacion_repository = PublicacionRepository()
-
+image_handler = ImageHandler()
 
 class PublicacionService:
 
     @staticmethod
-    def crear(publicacion: Publicacion):
+    def crear(publicacion: Publicacion, imagenes: List):
         # Agregar fecha actual
-        publicacion.fecha = datetime.now()
+        publicacion.fecha = datetime.now() 
+        # Manejo de imagenes
+        publicacion.imagenes = image_handler.publicacion(imagenes)
         publicacion = PublicacionRepository.crear(publicacion)
         return publicacion
+    
+    @staticmethod
+    def buscar_por_usuario(id_usuario: int):
+        publicaciones = PublicacionRepository.buscar_por_usuario(id_usuario)
+        return publicaciones
 
     
     # @staticmethod

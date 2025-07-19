@@ -10,7 +10,20 @@ class PublicacionRepository:
         result = mongo.db.posts.insert_one(data)
         publicacion._id = str(result.inserted_id)
         return publicacion
+    
+    @staticmethod
+    def buscar_por_usuario(id_usuario: int):
+        print(str(id_usuario))
+        resultado = mongo.db.posts.find({ "id_usuario": str(id_usuario) })
+        print(resultado)
 
+        # Convertimos ObjectId a string para que sea serializable como JSON
+        publicaciones = []
+        for p in resultado:
+            p['_id'] = str(p['_id'])
+            publicaciones.append(p)
+
+        return publicaciones
     # @staticmethod
     # def buscar():
     #     publicaciones = db.session.query(Amistad).all()

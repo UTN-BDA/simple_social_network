@@ -18,9 +18,10 @@ class UsuarioService:
         hoy = date.today()
         nacimiento = usuario.nacimiento
         edad = hoy.year - nacimiento.year - ((hoy.month, hoy.day) < (nacimiento.month, nacimiento.day))
-        
         usuario.edad = edad
-        usuario.imagen = image_handler.save(imagen)
+
+        # Manejo de imagenes
+        usuario.imagen = image_handler.perfil(imagen)
 
         usuario = UsuarioRepository.crear(usuario)
         return usuario
