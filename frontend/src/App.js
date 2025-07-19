@@ -3,14 +3,13 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
-import Sidebar from "./components/Sidebar";
 
 function App() {
   
   return (
      <BrowserRouter>
       <div className="app">
-        <Sidebar />
+        
         <main className="content">
           <Routes>
            <Route path="/" element={<Login />} />

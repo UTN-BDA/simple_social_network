@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../context/UserContext"; 
 import axios from 'axios';
 
 function Register() {
@@ -14,8 +13,6 @@ function Register() {
   const [mostrar, setMostrar] = useState(false);
   const [serverError, setServerError] = useState(null);
   const [errors, setErrors] = useState({}); 
-
-  const { setUsuario } = useUser(); 
 
   const navigate = useNavigate();
 
@@ -72,7 +69,6 @@ function Register() {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.status === 201 || res.data.message) {
-        setUsuario(res.data.data);
         navigate("/profile");   
     } 
     } catch (err) {
