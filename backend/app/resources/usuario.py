@@ -1,6 +1,6 @@
 from flask import Blueprint, request, url_for
-from app.services import UsuarioService, ResponseBuilder, PublicacionService
-from app.mapping import UsuarioSchema, ResponseSchema, PublicacionSchema
+from app.services import UsuarioService, ResponseBuilder, PublicacionService, SeguidorService
+from app.mapping import UsuarioSchema, ResponseSchema, PublicacionSchema, SeguidorSchema
 
 
 usuario = Blueprint('usuario', __name__)
@@ -8,11 +8,13 @@ usuario = Blueprint('usuario', __name__)
 # Service
 usuario_service = UsuarioService()
 publicacion_service = PublicacionService()
+seguidor_service = SeguidorService()
 
 # Schemas
 usuario_schema = UsuarioSchema()
 response_schema = ResponseSchema()
 publicacion_schema = PublicacionSchema()
+seguidor_schema = SeguidorSchema()
 
 # Obtener lista de usuarios
 @usuario.route('/', methods =['GET'])
@@ -66,7 +68,31 @@ def publicaciones(id_usuario):
             return response_schema.dump(response_builder.build())
         else:
             response_builder = ResponseBuilder()
-            response_builder.add_message("No hay publicaciones").add_status_code(200)
+            response_builder.add_message("No hay publicaciones").add_status_code(200).add_data([])
             return response_schema.dump(response_builder.build())
+    except Exception as e:
+        raise
+
+@usuario.route("/buscar", methods= ['GET'])
+def buscar_usuario():
+    response_builder = ResponseBuilder()
+    correo = request.args.get("correo")
+    try:
+        usr = usuario_service.buscar_por_correo(correo)
+        usr.imagen = url_for('static', filename=f"{"uploads/" + usr.imagen}", _external=True)
+        usuario = usuario_schema.dump(usr)
+        response_builder.add_data(usuario).add_message("Usuario encontrado").add_status_code(200)
+        return response_schema.dump(response_builder.build()), 200
+    except Exception as e:
+        raise
+
+@usuario.route("/seguir", methods= ['POST'])
+def seguir_usuario():
+    response_builder = ResponseBuilder()
+    seguidor = seguidor_schema.load(request.form)
+    try:
+        siguiendo = seguidor_schema.dump(seguidor_service.crear(seguidor))
+        response_builder.add_data(siguiendo).add_message("Ok").add_status_code(201)
+        return response_schema.dump(response_builder.build()), 201
     except Exception as e:
         raise

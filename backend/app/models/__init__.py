@@ -1,3 +1,3 @@
 from .usuario import Usuario
-from .amistad import Amistad
+from .seguidor import Seguidor
 from .publicacion import Publicacion

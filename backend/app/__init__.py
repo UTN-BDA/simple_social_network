@@ -41,7 +41,7 @@ def create_app():
     register_error_handlers(app)
 
     # Modelos
-    from app.models import Usuario, Amistad
+    from app.models import Usuario, Seguidor
 
     return app
 

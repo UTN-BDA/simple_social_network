@@ -1,3 +1,3 @@
 from .usuario_repository import UsuarioRepository
-from .amistad_respository import AmistadRepository
+from .seguidor_respository import SeguidorRepository
 from .publicacion_repository import PublicacionRepository
