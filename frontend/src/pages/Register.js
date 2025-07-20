@@ -69,6 +69,8 @@ function Register() {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.status === 201 || res.data.message) {
+        // Guardar en localstorage
+        localStorage.setItem("usuario", JSON.stringify(res.data.data));
         navigate("/profile");   
     } 
     } catch (err) {

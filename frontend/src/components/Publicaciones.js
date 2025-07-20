@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Publicacion from "../components/Publicacion";
 
 function Publicaciones(props) {
     const [publicaciones, setPublicaciones] = useState([]);
-    const usuario = JSON.parse(localStorage.getItem("usuario"))
   
     function recargar(){
-        axios.get("http://127.0.0.1:5000/usuario/publicaciones/" + usuario.id)
+        axios.get("http://127.0.0.1:5000/usuario/publicaciones/" + props.usuario_id)
         .then(res => {
-            console.log(res.data.data)
             setPublicaciones(res.data.data);
         })
         .catch(err => {
@@ -21,9 +19,13 @@ function Publicaciones(props) {
     <div>
         <h4>{props.titulo}</h4>
         <button onClick={recargar}>Recargar</button>
-        {publicaciones.map((pub) => (
-  <Publicacion key={pub._id} publicacion={pub} />
-))}
+          {publicaciones.length > 0 ? (
+            publicaciones.map((pub) => (
+              <Publicacion key={pub._id} publicacion={pub} />
+            ))
+          ) : (
+            <p>No hay publicaciones.</p>
+          )}
     </div>
   );
 }

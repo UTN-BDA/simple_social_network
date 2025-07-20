@@ -11,7 +11,7 @@ function Profile() {
       <h1>Perfil de {usuario.nombre}</h1>
       <img src={usuario.imagen} alt="Foto de perfil" style={{ width: 200 }} />
       <p>Correo: {usuario.correo}</p>
-      <Publicaciones titulo={"Tus publicaciones"}/>
+      <Publicaciones titulo={"Tus publicaciones"} usuario_id={usuario.id}/>
     </div>
   );
 }
