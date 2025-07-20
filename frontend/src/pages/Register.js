@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import "./css/Register.css";
 
 function Register() {
 
@@ -69,6 +70,8 @@ function Register() {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.status === 201 || res.data.message) {
+        // Guardar en localstorage
+        localStorage.setItem("usuario", JSON.stringify(res.data.data));
         navigate("/profile");   
     } 
     } catch (err) {
@@ -87,7 +90,7 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className="register-container">
       <h1>Registro</h1>
 
       {serverError && <p style={{ color: "red" }}>{serverError}</p>}
@@ -176,18 +179,25 @@ function Register() {
           <small className="errorMsg">{errors.contraseña}</small>
         )}
 
-        <label style={{ marginLeft: "0.5rem" }}>
+        <label className="checkbox-label">
           <input
             type="checkbox"
             checked={mostrar}
             onChange={toggleMostrarContraseña}
-          />{" "}
+          />
           Mostrar contraseña
         </label>
         
         <br />
 
-         <label>Foto de perfil <input type="file" accept="image/*" onChange={(e)=>setImagen(e.target.files[0])}/></label>
+          <label>
+          Foto de perfil
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImagen(e.target.files[0])}
+          />
+        </label>
 
          <br />
 

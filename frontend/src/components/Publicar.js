@@ -50,14 +50,13 @@ function Publicar() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ border: "1px solid #ccc", padding: "1rem", borderRadius: "8px" }}>
+    <form onSubmit={handleSubmit} className="publicar-form">
       <h3>Crear publicación</h3>
       <textarea
         value={texto}
         onChange={(e) => setTexto(e.target.value)}
         placeholder="¿Qué estás pensando?"
         rows="4"
-        style={{ width: "100%", marginBottom: "0.5rem" }}
       />
       <input
         type="file"
@@ -66,14 +65,12 @@ function Publicar() {
         onChange={handleImagenesChange}
         disabled={imagenes.length >= 4}
       />
-      <div style={{ margin: "0.5rem 0" }}>
         {imagenes.length > 0 && (
-          <div>
+          <div style={{ marginTop: "10px" }}>
             <strong>{imagenes.length} imagen{imagenes.length > 1 ? "es" : ""} seleccionada{imagenes.length > 1 ? "s" : ""}</strong>
           </div>
         )}
-      </div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
       <button type="submit" disabled={subiendo}>
         {subiendo ? "Publicando..." : "Publicar"}
       </button>

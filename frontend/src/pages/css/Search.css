@@ -1,0 +1,162 @@
+
+.search-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f7f9fc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.search-container h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.buscar-box {
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.buscar-box h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.buscar-box input[type="email"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.buscar-box input[type="email"]:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+.buscar-box button {
+  background-color: #007bff;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.buscar-box button:hover {
+  background-color: #0056b3;
+}
+
+.usuario-encontrado {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.usuario-encontrado h4 {
+  /* margin-bottom: 1rem; */
+  font-size: 1.1rem;
+}
+
+.usuario-encontrado img {
+  margin-top: 1rem;
+  width: 200px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.boton-seguir {
+  margin-top: 1rem;
+  background-color: #28a745;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.boton-seguir:hover {
+  background-color: #218838;
+}
+
+
+.usuario-encontrado {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.usuario-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.usuario-info img {
+  margin-top: 1rem;
+  width: 250px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.usuario-acciones {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.usuario-publicaciones {
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
+}
+
+.usuario-perfil {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.usuario-imagen {
+  width: 200px;
+  height: 2000px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.usuario-detalles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.usuario-detalles h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.usuario-correo {
+  margin: 4px 0 12px 0;
+  font-size: 0.95rem;
+  color: #666;
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import "./css/Login.css";
 
 function Login() {
 
@@ -59,14 +60,16 @@ function Login() {
   };
 
   return (
-    <>
+    <div className="login-container">
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
 
       <h1>Inicio de sesión</h1>
 
-      <label>¿No tienes cuenta? </label>
-      <button onClick={()=>navigate("/register")}>Registrate</button>
+      <div className="registro-link">
+        <label>¿No tienes cuenta?</label>
+        <button onClick={() => navigate("/register")}>Registrate</button>
+      </div>
 
       <br />
 
@@ -89,18 +92,20 @@ function Login() {
         value={contraseña}
         id='miContraseña'
       /> 
-      <label> Mostrar contraseña </label>
-      <input
-        type='checkbox'
-        checked={mostrar}
-        onChange={toggleMostrarContraseña}
-      /> 
 
+      <div className="checkbox-container">
+        <input
+          type='checkbox'
+          checked={mostrar}
+          onChange={toggleMostrarContraseña}
+        /> 
+        <label> Mostrar contraseña </label>
+      </div>
       <br />
 
       <button onClick={enviarDatos}>Ingresar</button>
 
-    </>
+    </div>
   );
 }
 

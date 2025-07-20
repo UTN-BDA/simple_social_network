@@ -10,10 +10,13 @@ export default function Sidebar() {
       <nav>
         <ul>  
           <li>
-            <NavLink to="/home">Home</NavLink>
+            <NavLink to="/home">Inicio</NavLink>
           </li>
           <li>
-            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/search">Buscar</NavLink>
+          </li>
+          <li>
+            <NavLink to="/profile">Perfil</NavLink>
           </li>
           <li>
             <NavLink to="/" end onClick={cerrar_sesion}>

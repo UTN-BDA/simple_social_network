@@ -5,7 +5,7 @@ function Publicacion({ publicacion }) {
   const fotos = imagenes || imagen || [];
 
   return (
-    <div style={{ border: "1px solid gray", padding: 10, marginBottom: 10 }}>
+    <div className="publicacion">
       <p><strong>Fecha:</strong> {fecha}</p>
 
       {texto && <p>{texto}</p>}
@@ -17,7 +17,6 @@ function Publicacion({ publicacion }) {
               key={index}
               src={img}
               alt={`imagen ${index + 1}`}
-              style={{ width: '150px', height: 'auto', objectFit: 'cover', borderRadius: 5 }}
             />
           ))}
         </div>
