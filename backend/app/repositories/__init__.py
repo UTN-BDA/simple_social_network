@@ -1,3 +1,4 @@
 from .usuario_repository import UsuarioRepository
 from .seguidor_respository import SeguidorRepository
 from .publicacion_repository import PublicacionRepository
+from .transaccion_repository import TransaccionRepository

@@ -1,9 +1,13 @@
 from flask import Blueprint, request, url_for
 from app.services import UsuarioService, ResponseBuilder, PublicacionService, SeguidorService
 from app.mapping import UsuarioSchema, ResponseSchema, PublicacionSchema, SeguidorSchema
+from app.repositories import TransaccionRepository
 
 
 usuario = Blueprint('usuario', __name__)
+
+# Repositories
+transaccion_repository = TransaccionRepository()
 
 # Service
 usuario_service = UsuarioService()
@@ -95,8 +99,15 @@ def seguir_usuario():
     response_builder = ResponseBuilder()
     seguidor = seguidor_schema.load(request.form)
     try:
-        siguiendo = seguidor_schema.dump(seguidor_service.crear(seguidor))
-        response_builder.add_data(siguiendo).add_message("Ok").add_status_code(201)
-        return response_schema.dump(response_builder.build()), 201
+        transaccion_realizada = transaccion_repository.seguir_usuario(
+            id_seguido = seguidor.id_seguido, 
+            id_seguidor = seguidor.id_seguidor
+        )
+        if transaccion_realizada:
+            response_builder.add_message("Siguiendo").add_status_code(201)
+            return response_schema.dump(response_builder.build()), 201
+        else:
+            response_builder.add_message("Ha surgido un error").add_status_code(400)
+            return response_schema.dump(response_builder.build()), 400
     except Exception as e:
         raise

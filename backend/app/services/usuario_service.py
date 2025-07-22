@@ -23,6 +23,9 @@ class UsuarioService:
         # Manejo de imagenes
         usuario.imagen = image_handler.perfil(imagen)
 
+        # Agregar seguidores
+        usuario.seguidores = 0
+
         usuario = UsuarioRepository.crear(usuario)
         return usuario
 

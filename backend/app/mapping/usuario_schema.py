@@ -21,6 +21,11 @@ class UsuarioSchema(Schema):
         validate=validate.Range(min=0, error="La edad no puede ser negativa.")
     )
 
+    seguidores = fields.Integer(
+        dump_only=True,
+        validate=validate.Range(min=0, error="La cantidad de seguidores no puede ser negativa.")
+    )
+
     nacimiento = fields.Date(required=True)
 
     correo = fields.String(
