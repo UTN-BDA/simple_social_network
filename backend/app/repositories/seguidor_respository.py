@@ -4,10 +4,14 @@ from app.models import Seguidor
 class SeguidorRepository:
     
     @staticmethod
-    def crear(seguidor: Seguidor) -> bool:
-        db.session.add(seguidor)
-        db.session.commit()
-        return seguidor
+    def crear(seguidor: Seguidor) -> Seguidor:
+        try:
+            db.session.add(seguidor)
+            db.session.commit()
+            return seguidor
+        except Exception as e:
+            db.session.rollback()
+            raise e
     
     @staticmethod
     def obtener_seguidos_por_usuario(id_usuario: int) -> list[int]:
