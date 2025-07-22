@@ -7,6 +7,8 @@ class PublicacionSchema(Schema):
 
     id_usuario = fields.String(required=True)
 
+    usuario = fields.String(required=True)
+
     fecha = fields.Date(required=False)
 
     texto = fields.String(

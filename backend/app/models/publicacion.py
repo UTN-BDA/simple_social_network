@@ -9,4 +9,8 @@ class Publicacion:
     fecha: str = None
     imagen: List = field(default_factory=list)
     texto: str = None
+    usuario: str = None
+    
+
+
     
