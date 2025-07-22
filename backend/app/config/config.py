@@ -14,12 +14,20 @@ class Config:
         
 
 class DevelopmentConfig(Config):
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    # Configuración de App
     DEBUG = True
+
+    # Configuración de PostgreSQL
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DB_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # Configuración de carpetas
     UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
     POSTS_UPLOAD_FOLDER = os.environ.get('POSTS_UPLOAD_FOLDER')
+
+    # Configuración de MongoDB
     MONGO_URI = os.environ.get('MONGO_URI')
+
 
 config = {
     'development': DevelopmentConfig,

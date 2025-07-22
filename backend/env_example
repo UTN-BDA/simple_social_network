@@ -1,3 +1,22 @@
+# URI PostgreSQL
 DEV_DB_URI = 'postgresql://usuario:contraseña@host:port/database'
-UPLOAD_FOLDER = 'app/static/uploads'
+
+# Conector psycopg2
+POSTGRES_DB = 'database'
+POSTGRES_USER = 'usuario'
+POSTGRES_PASSWORD = 'contraseña'
+POSTGRES_HOST = 'host'
+POSTGRES_PORT = 'port'
+
+# URI MongoDB
 MONGO_URI = 'mongodb://usuario:contraseña@host:port/database?authSource=admin'
+
+# Carpetas para manejos de archivos (ubicarlas donde sea conveniente)
+UPLOAD_FOLDER = 'app/static/uploads'
+POSTS_UPLOAD_FOLDER = 'app/static/posts'
+
+
+
+
+
+
