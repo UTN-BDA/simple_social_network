@@ -1,4 +1,5 @@
 from app import mongo
+from datetime import datetime, timedelta
 
 class PublicacionRepository:
 
@@ -13,43 +14,27 @@ class PublicacionRepository:
     
     @staticmethod
     def buscar_por_usuario(id_usuario: int):
-        print(str(id_usuario))
         resultado = mongo.db.posts.find({ "id_usuario": str(id_usuario) })
-        print(resultado)
 
-        # Convertimos ObjectId a string para que sea serializable como JSON
         publicaciones = []
         for p in resultado:
             p['_id'] = str(p['_id'])
             publicaciones.append(p)
 
         return publicaciones
-    # @staticmethod
-    # def buscar():
-    #     publicaciones = db.session.query(Amistad).all()
-    #     return publicaciones
     
+    @staticmethod
+    def ultimas_publicaciones_por_usuario(id_usuario: int, dias: int = 2):
+        fecha_limite = datetime.now() - timedelta(days=dias)
 
+        resultado = mongo.db.posts.find({
+            "id_usuario": str(id_usuario),
+            "fecha": { "$gte": fecha_limite }
+        }).sort("fecha", -1)
 
-    # @staticmethod
-    # def buscar_por_id(id: int):
-    #     return db.session.query(Amistad).filter_by(id=id).first()
+        publicaciones = []
+        for p in resultado:
+            p['_id'] = str(p['_id'])
+            publicaciones.append(p)
 
-
-    # @staticmethod
-    # def actualizar(publicacion) -> Amistad:
-    #     publicacion_existente = db.session.merge(publicacion)
-    #     if not publicacion_existente:
-    #         return None
-    #     return publicacion_existente
-    
-
-    # @staticmethod
-    # def borrar_por_id(id: int) -> Amistad:
-    #     publicacion = db.session.query(Amistad).filter_by(id=id).first()
-    #     if not publicacion:
-    #         return None
-    #     db.session.delete(publicacion)
-    #     db.session.commit()
-    #     return publicacion
-
+        return publicaciones

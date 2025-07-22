@@ -79,10 +79,14 @@ def buscar_usuario():
     correo = request.args.get("correo")
     try:
         usr = usuario_service.buscar_por_correo(correo)
-        usr.imagen = url_for('static', filename=f"{"uploads/" + usr.imagen}", _external=True)
-        usuario = usuario_schema.dump(usr)
-        response_builder.add_data(usuario).add_message("Usuario encontrado").add_status_code(200)
-        return response_schema.dump(response_builder.build()), 200
+        if usr:
+            usr.imagen = url_for('static', filename=f"{"uploads/" + usr.imagen}", _external=True)
+            usuario = usuario_schema.dump(usr)
+            response_builder.add_data(usuario).add_message("Usuario encontrado").add_status_code(200)
+            return response_schema.dump(response_builder.build()), 200
+        else:
+            response_builder.add_message("Usuario NO encontrado").add_status_code(400)
+            return response_schema.dump(response_builder.build()), 400
     except Exception as e:
         raise
 
