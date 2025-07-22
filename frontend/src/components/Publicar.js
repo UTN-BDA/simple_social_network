@@ -27,6 +27,7 @@ function Publicar() {
     }
 
     const formData = new FormData();
+    formData.append("usuario", usuario.nombre + " " + usuario.apellido)
     formData.append("id_usuario", usuario.id)
     formData.append("texto", texto);
     imagenes.forEach((img) => formData.append("imagenes", img));

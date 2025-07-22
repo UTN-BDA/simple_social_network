@@ -19,6 +19,7 @@ function Profile() {
           />
         <div className="profile-details">
             <p><strong>Correo:</strong> {usuario.correo}</p>
+            <p><strong>Seguidores:</strong> {usuario.seguidores}</p>
         </div>
         </div>
         <div className="profile-posts">

@@ -1,12 +1,13 @@
 function Publicacion({ publicacion }) {
-  const { texto, fecha, imagen, imagenes } = publicacion;
+  const { texto, fecha, imagen, imagenes, usuario } = publicacion;
 
   // Soportar tanto imagen única como lista de imágenes
   const fotos = imagenes || imagen || [];
 
   return (
     <div className="publicacion">
-      <p><strong>Fecha:</strong> {fecha}</p>
+      <p><strong>{usuario}</strong> </p>
+      <p>{fecha}</p>
 
       {texto && <p>{texto}</p>}
 

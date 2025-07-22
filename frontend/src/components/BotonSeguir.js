@@ -15,7 +15,7 @@ function BotonSeguir(params) {
             headers: { "Content-Type": "multipart/form-data" },
         });
 
-        if (res.status === 200 || res.data.message) {
+        if (res.status === 201|| res.data.message) {
            console.log(res.data)
         }
         } catch (err) {
