@@ -12,3 +12,7 @@ class Usuario(db.Model):
     correo: str = db.Column(db.String(80), nullable = False, unique = True)
     contraseña: str = db.Column(db.String(200), nullable = False)
     imagen: str = db.Column(db.String(200), nullable = False)
+
+    __table_args__ = (
+        db.Index('idx_usuario_correo', 'correo'), 
+    )
