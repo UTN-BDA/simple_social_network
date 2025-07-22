@@ -35,19 +35,6 @@ function Buscar() {
 
       <button onClick={handleSubmit}>Buscar usuario</button>
 
-      {/* {usuario && (
-        <div className="usuario-encontrado">
-          <h4>Datos del usuario:</h4>
-          <p><strong>ID:</strong> {usuario.id}</p>
-          <p><strong>Nombre:</strong> {usuario.nombre}</p>
-          <p><strong>Apellido:</strong> {usuario.apellido}</p>
-          <p><strong>Correo:</strong> {usuario.correo}</p>
-          <img src={usuario.imagen} alt="Foto de perfil" style={{ width: 200 }} />
-          
-          <BotonSeguir id_usuario={usuario.id}/>
-          <Publicaciones titulo={"Publicaciones de " + usuario.nombre} usuario_id={usuario.id}/>
-        </div> */}
-
           {usuario && (
           <div className="usuario-encontrado">
             <div className="usuario-perfil">
